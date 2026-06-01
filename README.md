@@ -4,7 +4,8 @@
   <p><strong>Real-time AI clinical reasoning. Transparent, auditable, educational.</strong></p>
 
   <p>
-    <a href="https://second-opinion-production.up.railway.app"><img src="https://img.shields.io/badge/Live%20Demo-Railway-6366f1?style=flat-square&logo=railway" alt="Live demo" /></a>
+    <a href="https://second-opinion-
+      .up.railway.app"><img src="https://img.shields.io/badge/Live%20Demo-Railway-6366f1?style=flat-square&logo=railway" alt="Live demo" /></a>
     <img src="https://img.shields.io/badge/Node.js-18%2B-339933?style=flat-square&logo=node.js" alt="Node.js" />
     <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License" />
     <img src="https://img.shields.io/badge/Models-OpenRouter-ff6b35?style=flat-square" alt="OpenRouter" />
