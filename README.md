@@ -30,8 +30,8 @@ Clinical reasoning is the hardest skill to teach. A diagnosis without explanatio
 
 Second Opinion takes a free-text patient presentation and streams a live, structured differential diagnosis: not as a chat response, but as a typed reasoning trace with auditable steps.
 
-| | |
-|*|*|
+| Feature | Description |
+|---|---|
 | **Live differential** | Top-3 hypotheses with animated probability bars, updated in real time as the model reasons |
 | **Evidence** | Supporting and refuting clinical findings surfaced per hypothesis |
 | **Clinical summary** | 2-3 sentence conclusion: leading diagnosis justified by specific clinical findings, then next steps and urgency |
