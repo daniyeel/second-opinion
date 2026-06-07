@@ -97,7 +97,7 @@
                   id="presets-toggle"
                   aria-expanded="false"
                   aria-controls="presets-drawer"
-                  data-tooltip="Load a pre-written clinical scenario"
+                  data-i18n-tooltip="tooltipExamples"
                 >
                   <span class="preset-chip-icon" aria-hidden="true">▸</span>
                   <span data-i18n="exampleCases">Example cases</span>
@@ -107,13 +107,13 @@
                   id="form-toggle"
                   aria-expanded="false"
                   aria-controls="form-drawer"
-                  data-tooltip="Build a patient description using guided fields"
+                  data-i18n-tooltip="tooltipForm"
                 >
                   <span class="preset-chip-icon" aria-hidden="true">▸</span>
                   <span data-i18n="fillWithForm">Fill with form</span>
                 </button>
                 <div class="model-field">
-                  <span class="model-field-label">MODEL</span>
+                  <span class="model-field-label" data-i18n="modelFieldLabel">Model</span>
                   <div class="model-group">
                     <div class="model-selector">
                       <select class="model-select" id="model-select" aria-label="Select AI model"></select>
@@ -122,12 +122,12 @@
                       <span class="model-selector-label">vs:</span>
                       <select class="model-select" id="model-select-b" aria-label="Second model for comparison"></select>
                     </div>
-                    <button class="compare-toggle" id="compare-toggle" type="button" data-tooltip="Run two models side by side on the same case">
+                    <button class="compare-toggle" id="compare-toggle" type="button" data-i18n-tooltip="tooltipCompare">
                       <span class="compare-toggle-label" data-i18n="compareBtn">Compare</span>
                     </button>
                   </div>
                 </div>
-                <button class="preset-chip camel-toggle-btn" id="camel-toggle" type="button" data-tooltip="Three specialist agents collaborate on a consensus differential">
+                <button class="preset-chip camel-toggle-btn" id="camel-toggle" type="button" data-i18n-tooltip="tooltipCamel">
                   <span data-i18n="multiAgentBtn">Multi-Agent</span>
                 </button>
               </div>

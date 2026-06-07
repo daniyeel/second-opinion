@@ -12,7 +12,7 @@
           feat3Body: " Answer the model's clarifying questions or add new clinical findings. The model reruns its reasoning with the updated information.",
           inputLabel: "Patient presentation",
           inputPlaceholder: "Describe a patient presentation...",
-          exampleCases: "Example cases", modelLabel: "Model:",
+          exampleCases: "Example cases", modelLabel: "Model:", modelFieldLabel: "Model",
           beginReasoning: "Begin reasoning", beginReasoningAria: "Begin reasoning",
           runAgain: "Run again", statusReasoning: "Reasoning", statusComplete: "Complete",
           reasoningEllipsis: "Reasoning…",
@@ -48,6 +48,10 @@
           fClear: "Clear", fUse: "Use this",
           multiAgentBtn: "Multi-Agent",
           camelSubmit: "Convene specialists",
+          tooltipExamples: "Load a pre-written clinical scenario",
+          tooltipForm: "Build a patient description using guided fields",
+          tooltipCompare: "Run two models side by side on the same case",
+          tooltipCamel: "Three specialist agents collaborate on a consensus differential",
           discussionTranscript: "Discussion transcript",
           consensusLabel: "Consensus Differential",
           phaseAnalyzing: "Analyzing", phaseDiscussing: "Discussing", phaseSynthesizing: "Synthesizing",
@@ -65,7 +69,7 @@
           feat3Body: " 回答模型提出的澄清问题，或补充新的临床发现。模型将根据更新后的信息重新推理。",
           inputLabel: "患者病情",
           inputPlaceholder: "描述患者病情...",
-          exampleCases: "预设案例", modelLabel: "模型：",
+          exampleCases: "预设案例", modelLabel: "模型：", modelFieldLabel: "模型",
           beginReasoning: "开始推理", beginReasoningAria: "开始推理",
           runAgain: "重新推理", statusReasoning: "推理中", statusComplete: "完成",
           reasoningEllipsis: "推理中…",
@@ -106,6 +110,10 @@
           fClear: "清除", fUse: "使用此内容",
           multiAgentBtn: "多专家",
           camelSubmit: "召集专家",
+          tooltipExamples: "加载预设临床病例",
+          tooltipForm: "通过表单填写患者信息",
+          tooltipCompare: "在同一病例上并行运行两个模型",
+          tooltipCamel: "三位专科智能体协同完成综合鉴别诊断",
           discussionTranscript: "讨论记录",
           consensusLabel: "综合鉴别诊断",
           phaseAnalyzing: "分析中", phaseDiscussing: "讨论中", phaseSynthesizing: "综合中",
@@ -168,6 +176,9 @@
         });
         document.querySelectorAll("[data-i18n-aria]").forEach(el => {
           el.setAttribute("aria-label", t(el.dataset.i18nAria));
+        });
+        document.querySelectorAll("[data-i18n-tooltip]").forEach(el => {
+          el.setAttribute("data-tooltip", t(el.dataset.i18nTooltip));
         });
         if (scenariosCache.length) renderScenarios(scenariosCache);
         const toggleLabel = document.querySelector(".compare-toggle-label");
