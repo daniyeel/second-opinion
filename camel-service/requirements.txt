@@ -1,0 +1,5 @@
+camel-ai
+fastapi
+uvicorn[standard]
+sse-starlette
+python-dotenv

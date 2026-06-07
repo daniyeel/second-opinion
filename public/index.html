@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Second Opinion</title>
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="description" content="Watch an AI work through clinical differential diagnosis." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function(){
+        var s=localStorage.getItem("so_theme");
+        var d=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if(s==="dark"||(s===null&&d)) document.documentElement.setAttribute("data-theme","dark");
+      })();
+    </script>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar" role="banner">
+        <div class="brand">
+          <img src="/logo.png" alt="" class="brand-mark" aria-hidden="true" />
+          <div class="brand-identity">
+            <span class="brand-name">Second Opinion</span>
+            <span class="brand-tag" data-i18n="brandTag">Clinical AI reasoning</span>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="history-btn" id="history-btn" aria-label="Session history" data-i18n="historyBtn">History</button>
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+            <span class="theme-toggle-icon" id="theme-icon">☀</span>
+          </button>
+          <div class="lang-toggle" id="lang-toggle" role="group" aria-label="Language">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="zh">中文</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="main" id="main">
+        <section class="hero" aria-labelledby="hero-title">
+          <h1 class="hero-title" id="hero-title" data-i18n="heroTitle">
+            Watch an AI work through a differential.
+          </h1>
+          <p class="hero-subtitle" data-i18n="heroSubtitle">
+            Describe a patient. Watch the AI reason through it, step by step.
+          </p>
+          <ul class="hero-features" aria-label="How it works">
+            <li>
+              <span class="hero-feature-icon" aria-hidden="true">01</span>
+              <div>
+                <strong data-i18n="feat1Title">Describe the case.</strong><br>
+                <span data-i18n="feat1Body"> Type a free-text patient presentation, or choose one of the built-in presets.</span>
+              </div>
+            </li>
+            <li>
+              <span class="hero-feature-icon" aria-hidden="true">02</span>
+              <div>
+                <strong data-i18n="feat2Title">Watch the reasoning unfold.</strong><br>
+                <span data-i18n="feat2Body"> The model surfaces candidate diagnoses, weighs supporting and refuting evidence, and continuously updates its differential as new information arrives — exactly as a clinician reasons through a case.</span>
+              </div>
+            </li>
+            <li>
+              <span class="hero-feature-icon" aria-hidden="true">03</span>
+              <div>
+                <strong data-i18n="feat3Title">Refine and interrogate.</strong><br>
+                <span data-i18n="feat3Body"> Answer the model's clarifying questions or add new clinical findings. The model reruns its reasoning with the updated information.</span>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <section aria-label="Input">
+          <div class="input-card" id="input-card">
+            <label for="input" class="sr-only" data-i18n="inputLabel">Patient presentation</label>
+            <textarea
+              id="input"
+              data-i18n-placeholder="inputPlaceholder"
+              placeholder="Describe a patient presentation..."
+              maxlength="1500"
+              autocomplete="off"
+              aria-describedby="char-count"
+            ></textarea>
+
+            <div id="refinement-display"></div>
+
+            <div class="input-footer">
+              <div class="input-meta">
+                <button
+                  class="preset-chip"
+                  id="presets-toggle"
+                  aria-expanded="false"
+                  aria-controls="presets-drawer"
+                  data-tooltip="Load a pre-written clinical scenario"
+                >
+                  <span class="preset-chip-icon" aria-hidden="true">▸</span>
+                  <span data-i18n="exampleCases">Example cases</span>
+                </button>
+                <button
+                  class="preset-chip"
+                  id="form-toggle"
+                  aria-expanded="false"
+                  aria-controls="form-drawer"
+                  data-tooltip="Build a patient description using guided fields"
+                >
+                  <span class="preset-chip-icon" aria-hidden="true">▸</span>
+                  <span data-i18n="fillWithForm">Fill with form</span>
+                </button>
+                <div class="model-field">
+                  <span class="model-field-label">MODEL</span>
+                  <div class="model-group">
+                    <div class="model-selector">
+                      <select class="model-select" id="model-select" aria-label="Select AI model"></select>
+                    </div>
+                    <div class="model-selector" id="model-selector-b" style="display:none">
+                      <span class="model-selector-label">vs:</span>
+                      <select class="model-select" id="model-select-b" aria-label="Second model for comparison"></select>
+                    </div>
+                    <button class="compare-toggle" id="compare-toggle" type="button" data-tooltip="Run two models side by side on the same case">
+                      <span class="compare-toggle-label" data-i18n="compareBtn">Compare</span>
+                    </button>
+                  </div>
+                </div>
+                <button class="preset-chip camel-toggle-btn" id="camel-toggle" type="button" data-tooltip="Three specialist agents collaborate on a consensus differential">
+                  <span data-i18n="multiAgentBtn">Multi-Agent</span>
+                </button>
+              </div>
+              <button class="submit-btn" id="submit" data-i18n-aria="beginReasoningAria" aria-label="Begin reasoning">
+                <span data-i18n="beginReasoning">Begin reasoning</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="presets-drawer" id="presets-drawer">
+            <div class="presets-list" id="presets-list" role="list"></div>
+          </div>
+
+          <div class="form-drawer" id="form-drawer">
+            <div class="form-panel">
+              <div class="form-row">
+                <div class="form-field form-field--sm">
+                  <label class="form-label" for="f-age" data-i18n="fAge">Age</label>
+                  <input class="form-input" id="f-age" type="number" min="0" max="120">
+                </div>
+                <div class="form-field form-field--sm">
+                  <label class="form-label" for="f-sex" data-i18n="fSex">Sex</label>
+                  <select class="form-select" id="f-sex">
+                    <option value="male" data-i18n="fMale">Male</option>
+                    <option value="female" data-i18n="fFemale">Female</option>
+                    <option value="person" data-i18n="fOther">Other</option>
+                  </select>
+                </div>
+                <div class="form-field form-field--lg">
+                  <label class="form-label" for="f-complaint" data-i18n="fComplaint">Chief Complaint</label>
+                  <input class="form-input" id="f-complaint" type="text" maxlength="120">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-field form-field--xl">
+                  <label class="form-label" for="f-symptoms" data-i18n="fSymptoms">Key Symptoms</label>
+                  <textarea class="form-input form-textarea" id="f-symptoms" rows="2" maxlength="400"></textarea>
+                </div>
+                <div class="form-field form-field--sm">
+                  <label class="form-label" for="f-duration" data-i18n="fDuration">Duration</label>
+                  <input class="form-input" id="f-duration" type="text" maxlength="60">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-field form-field--lg">
+                  <label class="form-label" for="f-vitals" data-i18n="fVitals">Vitals</label>
+                  <input class="form-input" id="f-vitals" type="text" maxlength="120">
+                </div>
+                <div class="form-field form-field--lg">
+                  <label class="form-label" for="f-history" data-i18n="fHistory">Medical History</label>
+                  <input class="form-input" id="f-history" type="text" maxlength="200">
+                </div>
+              </div>
+              <div class="form-actions">
+                <button class="form-clear-btn" id="form-clear" type="button" data-i18n="fClear">Clear</button>
+                <button class="form-use-btn" id="form-use" type="button" disabled data-i18n="fUse">Use this</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="thought-stream hidden" id="thought-stream" aria-live="polite" aria-label="Live reasoning">
+          <div class="thought-status" id="thought-status">
+            <span class="thought-status-dot" aria-hidden="true"></span>
+            <span id="thought-status-text" data-i18n="statusReasoning">Reasoning</span>
+          </div>
+          <div id="live-thought" class="live-thought hidden">
+            <span class="live-thought-dot" aria-hidden="true"></span>
+            <span class="live-thought-text"></span>
+          </div>
+          <div id="differential" class="differential hidden" aria-live="polite"></div>
+          <div id="conclusion-text"></div>
+          <div id="refine-area"></div>
+          <div id="post-conclusion-actions" style="display:none"></div>
+        </section>
+
+        <section class="log-section hidden" id="log-section" aria-label="Full reasoning log">
+          <button class="log-toggle" id="log-toggle" aria-expanded="false" aria-controls="log-content">
+            <span class="log-toggle-icon" aria-hidden="true">▸</span>
+            <span data-i18n="showTrace">Show full reasoning trace</span>
+          </button>
+          <div class="log-content" id="log-content"></div>
+        </section>
+
+        <div class="cmp-layout" id="cmp-layout">
+          <div class="cmp-pane" id="cmp-pane-a"></div>
+          <div class="cmp-pane" id="cmp-pane-b"></div>
+        </div>
+
+        <div class="camel-layout" id="camel-layout">
+          <div class="camel-phase-status" id="camel-phase-status"></div>
+          <div class="camel-panes" id="camel-panes"></div>
+          <section class="camel-discussion hidden" id="camel-discussion">
+            <div class="camel-discussion-header" data-i18n="discussionTranscript">Discussion transcript</div>
+            <div class="discussion-content" id="discussion-content"></div>
+          </section>
+          <div class="camel-consensus-header hidden" id="camel-consensus-header">
+            <span data-i18n="consensusLabel">Consensus Differential</span>
+          </div>
+        </div>
+
+        <div class="disclaimer" data-i18n="disclaimer">
+          Educational use only. Not for clinical or diagnostic purposes.
+        </div>
+      </main>
+
+      <div class="history-panel hidden" id="history-panel" role="dialog" aria-label="Session history">
+        <div class="history-panel-header">
+          <span data-i18n="sessionHistory">Session History</span>
+          <div class="history-header-actions">
+            <button class="history-clear-btn" id="history-clear-btn" data-i18n="clearHistory" style="display:none">Clear all</button>
+            <div class="history-confirm-row hidden" id="history-confirm-row">
+              <span class="history-confirm-label" data-i18n="clearHistoryConfirm">Clear all history?</span>
+              <button class="history-confirm-yes" id="history-confirm-yes" data-i18n="clearHistoryYes">Yes</button>
+              <button class="history-confirm-cancel" id="history-confirm-cancel" data-i18n="clearHistoryCancel">Cancel</button>
+            </div>
+            <button class="history-close-btn" id="history-close-btn" aria-label="Close">✕</button>
+          </div>
+        </div>
+        <div class="history-list" id="history-list"></div>
+      </div>
+
+    </div>
+
+    <div id="print-view" aria-hidden="true"></div>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

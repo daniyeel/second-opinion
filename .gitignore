@@ -1,0 +1,8 @@
+node_modules
+.env
+.DS_Store
+.claude/
+camel-service/__pycache__/
+camel-service/.venv/
+camel-service/venv/
+*.pyc
